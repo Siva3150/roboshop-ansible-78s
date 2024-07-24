@@ -1,4 +1,4 @@
-- name: Install rabbitmq
+- name: Install rabbitmq component
   hosts: rabbitmq
   become: yes
   tasks:

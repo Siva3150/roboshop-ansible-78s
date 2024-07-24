@@ -1,4 +1,4 @@
-- name: Download cart application
+- name: Configure cart module
   hosts: cart
   become: yes
   tasks:

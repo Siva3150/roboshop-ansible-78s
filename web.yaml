@@ -1,4 +1,4 @@
-- name: Install web component
+- name: Configure Web module
   hosts: web
   become: yes
   tasks:
