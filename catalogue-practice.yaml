@@ -2,7 +2,7 @@
   hosts: catalogue
   become: yes
   tasks:
-  - name: disable old nodejs and enable nodejs
+  - name: Disable old nodejs version and enable nodejs 18 version
     ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
 
   - name: Install nodejs
@@ -10,33 +10,28 @@
       name: nodejs 
       state: present
 
-  - name: create roboshop user
+  - name: Creating roboshop user
     ansible.builtin.user:
       name: roboshop
 
-  - name: Recursively remove app directory
-    ansible.builtin.file:
-      path: /app
-      state: absent
-
-  - name: create app directory
+  - name: Creating app directory
     ansible.builtin.file:
       path: /app
       state: directory
 
-  - name: download catalogue application
+  - name: Download catalogue applcation code
     ansible.builtin.get_url:
       url: https://roboshop-builds.s3.amazonaws.com/catalogue.zip
-      dest: /tmp
+      dest: /tmp 
 
-  - name: extract catalogue application
+  - name: Extract catalogue application
     ansible.builtin.unarchive:
       src: /tmp/catalogue.zip
-      dest: /app
+      dest: /app 
       remote_src: yes
 
   - name: Install dependencies
-    ansible.builtin.command: npm install
+    ansible.builtin.command: npm install 
     args:
       chdir: /app
 
@@ -45,7 +40,7 @@
       src: catalogue.service
       dest: /etc/systemd/system/catalogue.service
 
-  - name: deamon realod and start
+  - name: daemon reload
     ansible.builtin.systemd_service:
       daemon_reload: true
 
@@ -65,9 +60,9 @@
     ansible.builtin.command:  mongo --host mongodb.sivadevops.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
     register: product_count
 
-  # - name: print the count
-  #   ansible.builtin.debug:
-  #     msg: "product count: {{product_count}}"
+  - name: print the count
+    ansible.builtin.debug:
+      msg: "product count: {{product_count}}"
 
   - name: load catalogue data
     ansible.builtin.command: mongo --host mongodb.sivadevops.online < /app/schema/catalogue.js
@@ -78,3 +73,7 @@
       name: catalogue
       state: restarted
       enabled: yes
+  
+ 
+
+  
