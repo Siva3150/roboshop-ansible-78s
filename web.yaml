@@ -7,10 +7,15 @@
       name: nginx
       state: present
     
-  - name: Recursively remove directory
+  - name: Recursively remove html Directory
     ansible.builtin.file:
       path: /usr/share/nginx/html
       state: absent
+
+  - name: Create html Directory 
+    ansible.builtin.file:
+      path: /usr/share/nginx/html
+      state: directory 
 
   - name: Download the content
     ansible.builtin.get_url:
