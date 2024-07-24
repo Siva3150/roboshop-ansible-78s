@@ -3,7 +3,7 @@
   become: yes
   tasks:
   - name: Disable old nodejs version and enable nodejs 18 version
-    ansible.builtin.command: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
+    ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
 
  
 
