@@ -1,5 +1,5 @@
 - name: Configure payment module
-  hosts: cart
+  hosts: payment
   become: yes
   tasks:
   - name: Install python packages
