@@ -9,8 +9,8 @@
       name: maven
       state: present
 
-  - name: create roboshop user
-    ansible.builtin.user:
+  - name: create roboshop shipping
+    ansible.builtin.user: 
       name: roboshop
 
   - name: Recursively remove app directory
@@ -23,12 +23,12 @@
       path: /app
       state: directory
 
-  - name: download user application
+  - name: download shipping application
     ansible.builtin.get_url:
       url: https://roboshop-builds.s3.amazonaws.com/shipping.zip
       dest: /tmp
 
-  - name: extract user application
+  - name: extract shipping application
     ansible.builtin.unarchive:
       src: /tmp/shipping.zip
       dest: /app
@@ -56,7 +56,7 @@
   - name: install mysql-client
     ansible.builtin.package:
       name: mysql
-      state: started
+      state: present 
 
   - name: check cities schema exists or not
     ansible.builtin.command:  mysql -h mysql.sivadevops.online -uroot -p{{mysql_password}} -sN -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'cities'"
